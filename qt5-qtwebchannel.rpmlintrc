@@ -1,0 +1,2 @@
+# Intentional -- code in -examples package
+addFilter("E: devel-file-in-non-devel-package")

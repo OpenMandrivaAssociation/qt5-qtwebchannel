@@ -1,26 +1,28 @@
-%define api 5
+%define api %(echo %{version} |cut -d. -f1)
 %define major %api
-
-%define qtminor 4
-%define qtsubminor 1
-
-%define qtversion %{api}.%{qtminor}.%{qtsubminor}
+%define beta alpha
 
 %define qtwebchannel %mklibname qt%{api}webchannel %{major}
 %define qtwebchanneld %mklibname qt%{api}webchannel -d
 %define qtwebchannel_p_d %mklibname qt%{api}webchannel-private -d
 
-%define qttarballdir qtwebchannel-opensource-src-%{qtversion}
+%define qttarballdir qtwebchannel-opensource-src-%{version}%{?beta:-%{beta}}
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtwebchannel
-Version:	%{qtversion}
+Version:	5.5.0
+%if "%{beta}" != ""
+Release:	0.%{beta}.1
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%else
 Release:	1
+Source0:	http://download.qt-project.org/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%endif
+Source1000:	%{name}.rpmlintrc
 Summary:	Qt %{api} WebChannel library
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-Source0:	http://download.qt-project.org/official_releases/qt/%{api}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
 BuildRequires:	qt5-qtbase-devel >= %{version}
 BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
 
@@ -60,7 +62,7 @@ Devel files needed to build apps based on %{name}
 %{_qt5_libdir}/libQt5WebChannel.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebChannel.pc
 %{_qt5_includedir}/QtWebChannel
-%exclude %{_qt5_includedir}/QtWebChannel/%qtversion
+%exclude %{_qt5_includedir}/QtWebChannel/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webchannel.pri
 %{_qt5_libdir}/cmake/Qt5WebChannel
 
@@ -78,7 +80,7 @@ Provides:	qt5-qtwebchannel-private-devel = %{version}
 Devel files needed to build apps based on %{name}
 
 %files -n %{qtwebchannel_p_d}
-%{_qt5_includedir}/QtWebChannel/%qtversion
+%{_qt5_includedir}/QtWebChannel/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webchannel_private.pri
 
 #------------------------------------------------------------------------------
