@@ -1,28 +1,29 @@
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
-%define beta
+%define beta %nil
 
 %define qtwebchannel %mklibname qt%{api}webchannel %{major}
 %define qtwebchanneld %mklibname qt%{api}webchannel -d
 %define qtwebchannel_p_d %mklibname qt%{api}webchannel-private -d
 
-%define qttarballdir qtwebchannel-opensource-src-%{version}%{?beta:-%{beta}}
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtwebchannel
 Version:	5.5.0
 %if "%{beta}" != ""
 Release:	1.%{beta}.1
-Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%define qttarballdir qtwebchannel-opensource-src-%{version}-%{beta}
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
-Source0:	http://download.qt-project.org/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%define qttarballdir qtwebchannel-opensource-src-%{version}
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 Source1000:	%{name}.rpmlintrc
 Summary:	Qt %{api} WebChannel library
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
-URL:		http://www.qt-project.org
+URL:		http://www.qt.io
 BuildRequires:	qt5-qtbase-devel >= %{version}
 BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
 
@@ -55,7 +56,7 @@ Group:		Development/KDE and Qt
 Requires:	%{qtwebchannel} = %{version}
 
 %description -n %{qtwebchanneld}
-Devel files needed to build apps based on %{name}
+Devel files needed to build apps based on %{name}.
 
 %files -n %{qtwebchanneld}
 %{_qt5_libdir}/libQt5WebChannel.so
@@ -77,7 +78,7 @@ Requires:	qt5-qtscript-private-devel = %{version}
 Provides:	qt5-qtwebchannel-private-devel = %{version}
 
 %description -n %{qtwebchannel_p_d}
-Devel files needed to build apps based on %{name}
+Devel files needed to build apps based on %{name}.
 
 %files -n %{qtwebchannel_p_d}
 %{_qt5_includedir}/QtWebChannel/%version
