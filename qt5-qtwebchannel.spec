@@ -9,9 +9,9 @@
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtwebchannel
-Version:	5.6.0
+Version:	5.6.1
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	1.%{beta}.1
 %define qttarballdir qtwebchannel-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -33,7 +33,6 @@ HTML/JavaScript and Qt/QML objects.
 
 %files
 %_qt5_prefix/qml/QtWebChannel
-%_qt5_exampledir/qwebchannel
 %_qt5_exampledir/webchannel
 
 #------------------------------------------------------------------------------
