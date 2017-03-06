@@ -1,6 +1,6 @@
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta alpha
 
 %define qtwebchannel %mklibname qt%{api}webchannel %{major}
 %define qtwebchanneld %mklibname qt%{api}webchannel -d
@@ -9,7 +9,7 @@
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtwebchannel
-Version:	5.8.0
+Version:	5.9.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-opensource-src-%{version}-%{beta}
