@@ -1,6 +1,6 @@
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
-%define beta beta4
+%define beta rc1
 
 %define qtwebchannel %mklibname qt%{api}webchannel %{major}
 %define qtwebchanneld %mklibname qt%{api}webchannel -d
@@ -13,7 +13,7 @@ Version:	5.10.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-everywhere-src-%{version}-%{beta}
-Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%(echo %{beta} |sed -e "s,1$,,")/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
 %define qttarballdir qtwebchannel-opensource-src-%{version}
