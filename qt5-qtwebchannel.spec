@@ -27,6 +27,8 @@ URL:		http://www.qt.io
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
 BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
+# For the Provides: generator
+BuildRequires:	cmake >= 3.11.0-1
 
 %description
 Qt %{api} WebChannel library,  a library for communication between
