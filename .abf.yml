@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   qtwebchannel-opensource-src-5.9.2.tar.xz: 5123121c28b66f13b46e7327cc30393aa04dbbd9
+sources:
+  qtwebchannel-opensource-src-5.9.6.tar.xz: 455b79d9b8b11ba503c791f8ce37fabb69cb67da
