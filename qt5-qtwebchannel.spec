@@ -8,6 +8,10 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
+Summary:	Qt %{api} WebChannel library
+Group:		Development/KDE and Qt
+License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
+URL:		http://www.qt.io
 Name:		qt5-qtwebchannel
 Version:	5.15.3
 %if "%{beta}" != ""
@@ -15,17 +19,18 @@ Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtwebchannel-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
 Source1000:	%{name}.rpmlintrc
-# From KDE
+
+# From KDE https://invent.kde.org/qt/qt/qtwebchannel -b kde/5.15
 Patch1000:	0001-Bump-version.patch
-Summary:	Qt %{api} WebChannel library
-Group:		Development/KDE and Qt
-License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
-URL:		http://www.qt.io
+Patch1001:	0002-Handle-signals-in-the-registered-object-s-thread.patch
+Patch1002:	0003-Handle-per-transport-client-idle-status.patch
+Patch1003:	0004-QMetaObjectPublisher-Never-send-stale-queued-message.patch
+
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
 BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
@@ -37,12 +42,12 @@ Qt %{api} WebChannel library,  a library for communication between
 HTML/JavaScript and Qt/QML objects.
 
 %files
-%_qt5_prefix/qml/QtWebChannel
-%_qt5_exampledir/webchannel
+%{_qt5_prefix}/qml/QtWebChannel
+%{_qt5_exampledir}/webchannel
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtwebchannel}
+%package -n %{qtwebchannel}
 Summary:	Qt%{api} Component Library
 Group:		System/Libraries
 
@@ -54,8 +59,8 @@ Qt%{api} Component Library.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtwebchanneld}
-Summary:	Devel files needed to build apps based on %name
+%package -n %{qtwebchanneld}
+Summary:	Devel files needed to build apps based on %{name}
 Group:		Development/KDE and Qt
 Requires:	%{qtwebchannel} = %{version}
 
@@ -67,14 +72,14 @@ Devel files needed to build apps based on %{name}.
 %{_qt5_libdir}/libQt5WebChannel.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebChannel.pc
 %{_qt5_includedir}/QtWebChannel
-%exclude %{_qt5_includedir}/QtWebChannel/%version
+%exclude %{_qt5_includedir}/QtWebChannel/%{version}
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webchannel.pri
 %{_qt5_libdir}/cmake/Qt5WebChannel
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtwebchannel_p_d}
-Summary:	Devel files needed to build apps based on %name
+%package -n %{qtwebchannel_p_d}
+Summary:	Devel files needed to build apps based on %{name}
 Group:		Development/KDE and Qt
 Requires:	%{qtwebchanneld} = %{version}
 Requires:	pkgconfig(Qt5Core)  = %{version}
@@ -85,7 +90,7 @@ Provides:	qt5-qtwebchannel-private-devel = %{version}
 Devel files needed to build apps based on %{name}.
 
 %files -n %{qtwebchannel_p_d}
-%{_qt5_includedir}/QtWebChannel/%version
+%{_qt5_includedir}/QtWebChannel/%{version}
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webchannel_private.pri
 
 #------------------------------------------------------------------------------
@@ -104,7 +109,7 @@ Devel files needed to build apps based on %{name}.
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
-pushd %{buildroot}%{_qt5_libdir}
+cd %{buildroot}%{_qt5_libdir}
 for prl_file in libQt5*.prl ; do
   sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
   if [ -f "$(basename ${prl_file} .prl).so" ]; then
@@ -112,7 +117,7 @@ for prl_file in libQt5*.prl ; do
     sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
   fi
 done
-popd
+cd -
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
