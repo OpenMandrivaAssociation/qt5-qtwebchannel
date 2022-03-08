@@ -19,17 +19,16 @@ Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
-%define qttarballdir qtwebchannel-everywhere-src-5.15.2
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
+Release:	3
+%define qttarballdir qtwebchannel-everywhere-opensource-src-%{version}
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 Source1000:	%{name}.rpmlintrc
 
 # From KDE https://invent.kde.org/qt/qt/qtwebchannel -b kde/5.15
-Patch1000:	0001-Bump-version.patch
-Patch1001:	0002-Handle-signals-in-the-registered-object-s-thread.patch
-Patch1002:	0003-Handle-per-transport-client-idle-status.patch
-Patch1003:	0004-QMetaObjectPublisher-Never-send-stale-queued-message.patch
+Patch1000:	0001-Handle-signals-in-the-registered-object-s-thread.patch
+Patch1001:	0002-Handle-per-transport-client-idle-status.patch
+Patch1002:	0003-QMetaObjectPublisher-Never-send-stale-queued-message.patch
 
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
@@ -96,7 +95,7 @@ Devel files needed to build apps based on %{name}.
 #------------------------------------------------------------------------------
 
 %prep
-%autosetup -n %qttarballdir -p1
+%autosetup -n %(echo %qttarballdir|sed -e 's,-opensource,,') -p1
 %{_qt5_prefix}/bin/syncqt.pl -version %{version}
 
 %build
@@ -118,7 +117,3 @@ for prl_file in libQt5*.prl ; do
   fi
 done
 cd -
-
-# .la and .a files, die, die, die.
-rm -f %{buildroot}%{_qt5_libdir}/lib*.la
-rm -f %{buildroot}%{_qt5_libdir}/lib*.a
