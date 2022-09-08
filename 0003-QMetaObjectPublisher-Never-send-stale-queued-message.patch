@@ -1,4 +1,4 @@
-From da9b7b0e059447dceb828bc02d40e30d26b012f2 Mon Sep 17 00:00:00 2001
+From fb1ca87aa1a12048199d2aabe9015b7222d2b773 Mon Sep 17 00:00:00 2001
 From: Arno Rehn <a.rehn@menlosystems.com>
 Date: Wed, 8 Dec 2021 22:44:49 +0100
 Subject: [PATCH 3/3] QMetaObjectPublisher: Never send stale queued messages
@@ -56,5 +56,5 @@ index 3897c07..898d769 100644
  }
  
 -- 
-2.36.1
+2.37.2
 
