@@ -1,4 +1,4 @@
-From 69f4f18a803423a53155e4a4418270b15fa041d9 Mon Sep 17 00:00:00 2001
+From f3af39c53e3bc78603e601cf28c84ae23e5b9c5d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C3=98ystein=20Heskestad?= <oystein.heskestad@qt.io>
 Date: Fri, 7 May 2021 15:23:38 +0200
 Subject: [PATCH 2/3] Handle per-transport client idle status

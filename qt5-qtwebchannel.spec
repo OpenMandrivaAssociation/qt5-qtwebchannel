@@ -13,7 +13,7 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Name:		qt5-qtwebchannel
-Version:	5.15.7
+Version:	5.15.8
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-everywhere-src-%{version}-%{beta}
