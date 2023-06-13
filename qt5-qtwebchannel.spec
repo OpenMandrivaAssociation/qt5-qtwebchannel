@@ -13,7 +13,7 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Name:		qt5-qtwebchannel
-Version:	5.15.9
+Version:	5.15.10
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebchannel-everywhere-src-%{version}-%{beta}
@@ -26,9 +26,9 @@ Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f
 Source1000:	%{name}.rpmlintrc
 
 # From KDE https://invent.kde.org/qt/qt/qtwebchannel -b kde/5.15
-Patch1000:	0001-Handle-signals-in-the-registered-object-s-thread.patch
-Patch1001:	0002-Handle-per-transport-client-idle-status.patch
-Patch1002:	0003-QMetaObjectPublisher-Never-send-stale-queued-message.patch
+Patch1001:	0001-Handle-signals-in-the-registered-object-s-thread.patch
+Patch1002:	0002-Handle-per-transport-client-idle-status.patch
+Patch1003:	0003-QMetaObjectPublisher-Never-send-stale-queued-message.patch
 
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}

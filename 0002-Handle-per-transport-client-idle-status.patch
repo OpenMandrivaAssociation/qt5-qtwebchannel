@@ -1,4 +1,4 @@
-From b20265c497f8403c4360bfcf2f30ae791d5868a0 Mon Sep 17 00:00:00 2001
+From bbe02f027a4608c14ff7a902fb746dd095b37ff9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C3=98ystein=20Heskestad?= <oystein.heskestad@qt.io>
 Date: Fri, 7 May 2021 15:23:38 +0200
 Subject: [PATCH 2/3] Handle per-transport client idle status
@@ -331,5 +331,5 @@ index eae21f4..dd4e690 100644
      void testDeletionDuringMethodInvocation();
  
 -- 
-2.40.0.rc2
+2.41.0.rc2
 
