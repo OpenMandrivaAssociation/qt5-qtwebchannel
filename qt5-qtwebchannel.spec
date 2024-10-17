@@ -11,7 +11,7 @@
 Summary:	Qt %{api} WebChannel library
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
-URL:		http://www.qt.io
+URL:		https://www.qt.io
 Name:		qt5-qtwebchannel
 Version:	5.15.15
 %if "%{beta}" != ""
